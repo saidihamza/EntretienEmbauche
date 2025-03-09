@@ -97,6 +97,9 @@ input[type=password] {
     appearance: none
 }
 
+a{
+    text-decoration: none !important;
+}
 textarea.form-control {
     resize: vertical;
     min-height: 120px

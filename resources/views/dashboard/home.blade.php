@@ -163,7 +163,7 @@
                                         </td>
                                         <td class="text-nowrap">
                                             <a href="profile.html">
-                                                <img class="rounded-circle"src="{{ URL::to('assets/img/profiles/avatar-01.jpg') }}" width="25" alt="Star Students"> Soeng Souy
+                                                <img class="rounded-circle"src="{{ URL::to('assets/img/profiles/avatar-01.jpg') }}" width="25" alt="Star Students"> Saidi Hamza
                                             </a>
                                         </td>
                                         <td class="text-center">1185</td>
@@ -178,7 +178,7 @@
                                         </td>
                                         <td class="text-nowrap">
                                             <a href="profile.html">
-                                                <img class="rounded-circle"src="{{ URL::to('assets/img/profiles/avatar-01.jpg') }}" width="25" alt="Star Students"> Soeng Souy
+                                                <img class="rounded-circle"src="{{ URL::to('assets/img/profiles/avatar-01.jpg') }}" width="25" alt="Star Students"> Saidi Hamza
                                             </a>
                                         </td>
                                         <td class="text-center">1195</td>
@@ -193,7 +193,7 @@
                                         </td>
                                         <td class="text-nowrap">
                                             <a href="profile.html">
-                                                <img class="rounded-circle"src="{{ URL::to('assets/img/profiles/avatar-01.jpg') }}" width="25" alt="Star Students"> Soeng Souy
+                                                <img class="rounded-circle"src="{{ URL::to('assets/img/profiles/avatar-01.jpg') }}" width="25" alt="Star Students"> Saidi Hamza
                                             </a>
                                         </td>
                                         <td class="text-center">1196</td>
@@ -208,7 +208,7 @@
                                         </td>
                                         <td class="text-nowrap">
                                             <a href="profile.html">
-                                                <img class="rounded-circle"src="{{ URL::to('assets/img/profiles/avatar-01.jpg') }}" width="25" alt="Star Students"> Soeng Souy
+                                                <img class="rounded-circle"src="{{ URL::to('assets/img/profiles/avatar-01.jpg') }}" width="25" alt="Star Students"> Saidi Hamza
                                             </a>
                                         </td>
                                         <td class="text-center">1187</td>

@@ -4,7 +4,7 @@
         <div class="col-12">
             <h5 class="form-title candidat-info text-xl font-semibold text-gray-700">Informations sur le Candidat
                 <span>
-                    <a href="javascript:;"><i class="feather-more-vertical"></i></a>
+                    <a href="javascript:;"></a>
                 </span>
             </h5>
         </div>

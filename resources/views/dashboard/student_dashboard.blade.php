@@ -228,7 +228,7 @@
                                                     <span class="feed-text1"><a>Mathematics</a></span>
                                                     <ul class="teacher-date-list">
                                                         <li><i class="fas fa-calendar-alt me-2"></i>September 5,
-                                                            2022</li>
+                                                            2025</li>
                                                         <li>|</li>
                                                         <li><i class="fas fa-clock me-2"></i>09:00 am - 10:00 am (60
                                                             Minutes)</li>
@@ -243,7 +243,7 @@
                                                     <span class="feed-text1"><a>Geography </a></span>
                                                     <ul class="teacher-date-list">
                                                         <li><i class="fas fa-calendar-alt me-2"></i>September 5,
-                                                            2022</li>
+                                                            2025</li>
                                                         <li>|</li>
                                                         <li><i class="fas fa-clock me-2"></i>09:00 am - 10:00 am (60
                                                             Minutes)</li>
@@ -258,7 +258,7 @@
                                                     <span class="feed-text1"><a>Botony</a></span>
                                                     <ul class="teacher-date-list">
                                                         <li><i class="fas fa-calendar-alt me-2"></i>September 5,
-                                                            2022</li>
+                                                            2025</li>
                                                         <li>|</li>
                                                         <li><i class="fas fa-clock me-2"></i>09:00 am - 10:00 am (60
                                                             Minutes)</li>

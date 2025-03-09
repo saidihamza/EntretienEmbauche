@@ -24,6 +24,8 @@ use App\Http\Controllers\DecisionController;
 use App\Http\Controllers\CompagneController;
 use App\Http\Controllers\EntretienController;
 use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\CalendarController;
+
 
 
 /*
@@ -218,3 +220,29 @@ Route::get('feedbacks/{feedback}', [FeedbackController::class, 'show'])->name('f
 Route::get('feedbacks/{feedback}/edit', [FeedbackController::class, 'edit'])->name('feedbacks.edit');
 Route::put('feedbacks/{feedback}', [FeedbackController::class, 'update'])->name('feedbacks.update');
 Route::delete('feedbacks/{feedback}', [FeedbackController::class, 'destroy'])->name('feedbacks.destroy');
+
+// ----------------------------calendar ------------------------------//
+
+
+Route::get('/calendar', [CalendarController::class, 'index']);
+use App\Http\Controllers\EventController;
+
+// Afficher le calendrier
+Route::get('/calendar', [EventController::class, 'index']);
+
+// Récupérer les événements pour FullCalendar
+Route::get('/events', [EventController::class, 'getEvents']);
+
+// Enregistrer un nouvel événement
+
+Route::post('/events', [EventController::class, 'store']);
+
+
+// Mettre à jour un événement existant
+Route::put('/events/{id}', [EventController::class, 'update']);
+
+// Supprimer un événement
+Route::delete('/events/{id}', [EventController::class, 'destroy']);
+
+
+Route::get('/calendar', [EventController::class, 'index'])->name('calendar.index');
