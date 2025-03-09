@@ -75,14 +75,3 @@
         </div>
     </div>
 </form>
-@if(session('success'))
-    <script>
-        toastr.success("{{ session('success') }}", "Succès", {timeOut: 5000});
-    </script>
-@endif
-
-@if(session('error'))
-    <script>
-        toastr.error("{{ session('error') }}", "Erreur", {timeOut: 5000});
-    </script>
-@endif

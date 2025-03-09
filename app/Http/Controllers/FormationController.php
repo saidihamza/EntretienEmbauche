@@ -25,21 +25,27 @@ class FormationController extends Controller
     /** Enregistrer une nouvelle formation */
     public function store(Request $request)
     {
-        // Validation et création de la formation
-        $validated = $request->validate([
-            'diplome' => 'required|string',
-            'formation' => 'required|string',
-            'universite' => 'required|string',
-            'annee_obtention' => 'required|integer',
+        // Validation des données
+        $request->validate([
+            'diplome' => 'required|string|max:255',
+            'formation' => 'required|string|max:255',
+            'universite' => 'required|string|max:255',
+            'annee_obtention' => 'required|integer|digits:4',
         ]);
-    
-        // Si la validation réussit, on crée la formation
-        $formation = Formation::create($validated);
-    
-        // Retourner avec un message de succès
-        return redirect()->back()->with('success', 'Formation ajoutée avec succès.');
+
+        // Création de la formation
+        Formation::create([
+            'diplome' => $request->diplome,
+            'formation' => $request->formation,
+            'universite' => $request->universite,
+            'annee_obtention' => $request->annee_obtention,
+        ]);
+
+        // Message de succès avec Toastr
+        Toastr::success('Formation ajoutée avec succès!', 'Succès');
+        
+        return redirect()->route('formation.index');
     }
-    
 
     /** Afficher une formation */
     public function show($id)

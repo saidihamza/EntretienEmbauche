@@ -24,7 +24,6 @@ use App\Http\Controllers\DecisionController;
 use App\Http\Controllers\CompagneController;
 use App\Http\Controllers\EntretienController;
 use App\Http\Controllers\FeedbackController;
-use App\Http\Controllers\CalendarController;
 
 
 /*
@@ -146,9 +145,7 @@ Route::put('/formation/{id}', [FormationController::class, 'update'])->name('for
 
 
 // ----------------------------experiences ------------------------------//
-
-Route::get('experiences/create', [ExperienceController::class, 'create'])->name('experiences.create');
-Route::post('experiences', [ExperienceController::class, 'store'])->name('experiences.store');
+Route::post('/experiences', [ExperienceController::class, 'store'])->name('experiences.store');
 
 // ----------------------------competences ------------------------------//
 Route::post('/competences', [CompetenceController::class, 'store'])->name('competences.store');
@@ -221,13 +218,3 @@ Route::get('feedbacks/{feedback}', [FeedbackController::class, 'show'])->name('f
 Route::get('feedbacks/{feedback}/edit', [FeedbackController::class, 'edit'])->name('feedbacks.edit');
 Route::put('feedbacks/{feedback}', [FeedbackController::class, 'update'])->name('feedbacks.update');
 Route::delete('feedbacks/{feedback}', [FeedbackController::class, 'destroy'])->name('feedbacks.destroy');
-
-
-
-// ----------------------------calendrier ------------------------------// 
-
-Route::get('calendar', [FeedbackController::class, 'index'])->name('calendar.index');
-Route::get('/events', [CalendarController::class, 'fetchEvents']);
-Route::post('/events', [CalendarController::class, 'store']);
-Route::put('/events/{id}', [CalendarController::class, 'update']);
-Route::delete('/events/{id}', [CalendarController::class, 'destroy']);

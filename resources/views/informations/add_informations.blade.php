@@ -14,11 +14,18 @@
                 <label class="block text-sm font-medium text-gray-700">Choisir une catégorie<span class="text-red-500">*</span></label>
                 <select class="form-control select @error('categorie') is-invalid @enderror" name="categorie" required>
                     <option selected disabled>Sélectionnez une catégorie</option>
-                    @foreach ($categories as $categorie)
-                        <option value="{{ $categorie->categorie }}" {{ old('categorie') == $categorie->categorie ? "selected" : "" }}>
-                            {{ $categorie->categorie }}
-                        </option>
-                    @endforeach
+                    <option value="Ingénieur Développement" {{ old('categorie') == 'Ingénieur Développement' ? "selected" : "" }}>Ingénieur Développement</option>
+                    <option value="Consultant Support" {{ old('categorie') == 'Consultant Support' ? "selected" : "" }}>Consultant Support</option>
+                    <option value="Assistance & Commerciale" {{ old('categorie') == 'Assistance & Commerciale' ? "selected" : "" }}>Assistance & Commerciale</option>
+                    <option value="RH" {{ old('categorie') == 'RH' ? "selected" : "" }}>RH</option>
+                    <option value="Ingénieur réseau et système" {{ old('categorie') == 'Ingénieur réseau et système' ? "selected" : "" }}>Ingénieur réseau et système</option>
+                    <option value="Conseiller(e) aux admissions" {{ old('categorie') == 'Conseiller(e) aux admissions' ? "selected" : "" }}>Conseiller(e) aux admissions</option>
+                    <option value="Admissions" {{ old('categorie') == 'Admissions' ? "selected" : "" }}>Admissions</option>
+                    <option value="Commercial(e)" {{ old('categorie') == 'Commercial(e)' ? "selected" : "" }}>Commercial(e)</option>
+                    <option value="Marketing" {{ old('categorie') == 'Marketing' ? "selected" : "" }}>Marketing</option>
+                    <option value="Technicien informatique" {{ old('categorie') == 'Technicien informatique' ? "selected" : "" }}>Technicien informatique</option>
+                    <option value="Community Manager" {{ old('categorie') == 'Community Manager' ? "selected" : "" }}>Community Manager</option>
+                    <option value="Graphic Designer" {{ old('categorie') == 'Graphic Designer' ? "selected" : "" }}>Graphic Designer</option>
                 </select>
                 @error('categorie')
                     <span class="invalid-feedback" role="alert">
@@ -27,18 +34,20 @@
                 @enderror
             </div>
         </div>
-
         {{-- Source CV --}}
         <div class="col-12 col-sm-4">
             <div class="form-group local-forms">
                 <label class="block text-sm font-medium text-gray-700">Source CV</label>
                 <select class="form-control select @error('cv_source') is-invalid @enderror" name="cv_source">
                     <option selected disabled>Sélectionnez la source du CV</option>
-                    @foreach ($sources as $source)
-                        <option value="{{ $source->source }}" {{ old('cv_source') == $source->source ? "selected" : "" }}>
-                            {{ $source->source }}
-                        </option>
-                    @endforeach
+                    <option value="TanitJob - Opensilog" {{ old('cv_source') == 'TanitJob - Opensilog' ? "selected" :""}}>TanitJob - Opensilog</option>
+                    <option value="Jobi" {{ old('cv_source') == 'Jobi' ? "selected" :""}}>Jobi</option>
+                    <option value="LinkedIn" {{ old('cv_source') == 'LinkedIn - Ines' ? "selected" :""}}>LinkedIn</option>
+                    <option value="Trun over IT" {{ old('cv_source') == 'Trun over IT' ? "selected" :""}}>Trun over IT</option>
+                    <option value="Recommandation" {{ old('cv_source') == 'Recommandation' ? "selected" :""}}>Recommandation</option>
+                    <option value="Candidature spontanée" {{ old('cv_source') == 'Candidature spontanée' ? "selected" :""}}>Candidature spontanée</option>
+                    <option value="Keejob" {{ old('cv_source') == 'Keejob- Digilinks' ? "selected" :""}}>Keejob</option>
+                    <option value="Site Digilinks" {{ old('cv_source') == 'Site Digilinks' ? "selected" :""}}>Site Digilinks</option>
                 </select>
                 @error('cv_source')
                     <span class="invalid-feedback" role="alert">
