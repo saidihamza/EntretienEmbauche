@@ -9,41 +9,42 @@
                             <h3 class="page-title">Candidats</h3>
                             <ul class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{ route('candidat/list') }}">Candidats</a></li>
-                                <li class="breadcrumb-item active">All Candidats</li>
+                                <li class="breadcrumb-item active">Tous les Candidats</li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
-            
+
             {{-- Message --}}
             {!! Toastr::message() !!}
-            
+
             <div class="candidat-group-form">
                 <div class="row">
                     <div class="col-lg-3 col-md-6">
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Search by ID ...">
+                            <input type="text" id="searchById" class="form-control" placeholder="Search by ID ...">
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6">
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Search by Name ...">
+                            <input type="text" id="searchByName" class="form-control" placeholder="Search by Name ...">
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-6">
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Search by Phone ...">
+                            <input type="text" id="searchByPhone" class="form-control" placeholder="Search by Phone ...">
                         </div>
                     </div>
                     <div class="col-lg-2">
                         <div class="search-candidat-btn">
-                            <button type="button" class="btn btn-primary">Search</button>
+                            <button type="button" class="btn btn-primary" id="searchButton">Search</button>
+                            <button type="button" class="btn btn-secondary" id="resetButton">Reset</button>
                         </div>
                     </div>
                 </div>
             </div>
-            
+
             <div class="row">
                 <div class="col-sm-12">
                     <div class="card card-table comman-shadow">
@@ -71,7 +72,7 @@
                                                     <input class="form-check-input" type="checkbox" value="something">
                                                 </div>
                                             </th>
-                                            <th>Date</th>
+                                            <th>Date <i class="feather-chevron-up"></i></th> {{-- Example of sortable column --}}
                                             <th>Categorie</th>
                                             <th>Candidat</th>
                                             <th>Tel</th>
@@ -114,6 +115,8 @@
                                     </tbody>
                                 </table>
                             </div>
+                            
+
                         </div>
                     </div>
                 </div>
@@ -156,6 +159,18 @@
                 var _this = $(this).closest('tr');
                 $('.e_id').val(_this.find('.id').text());
                 $('.e_avatar').val(_this.find('.avatar').text());
+            });
+
+            // Add functionality for the search
+            document.getElementById('searchButton').addEventListener('click', function () {
+                // Filter functionality
+            });
+
+            // Reset button functionality
+            document.getElementById('resetButton').addEventListener('click', function () {
+                document.getElementById('searchById').value = '';
+                document.getElementById('searchByName').value = '';
+                document.getElementById('searchByPhone').value = '';
             });
         </script>
     @endsection

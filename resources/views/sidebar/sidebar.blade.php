@@ -1,114 +1,104 @@
-
 <div class="sidebar" id="sidebar">
     <div class="sidebar-inner slimscroll">
         <div id="sidebar-menu" class="sidebar-menu">
             <ul class="menu-list">
 
-                <!-- Tableau de Bord -->
+                <!-- Candidats -->
                 <li class="submenu">
-                    <a href="{{ route('/home') }}"><span>📊 Tableau de Bord</span><span class="menu-arrow"></span></a>
-                </li>
-                <!-- Gestion des Utilisateurs -->
-                <li class="submenu">
-                    <a href="#"><span>👥 Gestion des Utilisateurs</span><span class="menu-arrow"></span></a>
+                    <a href="#"><span>👥 Candidats</span><span class="menu-arrow"></span></a>
                     <ul>
-                        <li><a href="{{ route('candidat/add/page') }}">➕ Ajouter un candidat</a></li>
+                        <li><a href="{{ route('candidat/add/page') }}">➕ Ajouter Candidat</a></li>
                         <li><a href="{{ route('candidat/list') }}">📋 Liste des candidats</a></li>
-                        <li><a href="{{ route('candidat/suivie') }}">📌 Suivi des candidats</a></li>
-                        <li><a href="">👔 Gestion des recruteurs</a></li>
-                        <li><a href="">🛠️ Gestion des administrateurs</a></li>
+                        <li><a href="{{ route('candidat/suivie') }}">📌 Suivi Candidat</a></li>
                     </ul>
                 </li>
 
-                <!-- Gestion des Entretiens -->
+                <!-- Avis -->
                 <li class="submenu">
-                    <a href="#"><span>📅 Gestion des Entretiens</span><span class="menu-arrow"></span></a>
+                    <a href="#"><span>💬 Avis</span><span class="menu-arrow"></span></a>
                     <ul>
-                        <li><a href="{{ route('entretiens.index') }}">📅 Entretiens programmés</a></li>
-                        <li><a href="">➕ Planifier un entretien</a></li>
-                        <li><a href="{{ route('feedbacks.index') }}">📝 Feedbacks et évaluations</a></li>
-                        <li><a href="#">📊 Historique des entretiens</a></li>
+                        <li><a href="{{ route('avis/attente') }}">⏳ Mes avis en attente</a></li>
+                        <li><a href="{{ route('avis/list/page') }}">🗂️ Avis</a></li>
                     </ul>
                 </li>
 
-                <!-- Génération des Questions -->
+                <!-- Expression de besoin -->
                 <li class="submenu">
-                    <a href="#"><span>🤖 Génération des Questions</span><span class="menu-arrow"></span></a>
+                    <a href="#"><span>📝 Expression de besoin</span><span class="menu-arrow"></span></a>
                     <ul>
-                        <li><a href="#">📌 Générer des questions IA</a></li>
-                        <li><a href="#">🔍 Historique des questions</a></li>
-                        <li><a href="#">⚙️ Personnalisation des questions</a></li>
+                        <li><a href="#">📑 Consulter Besoins</a></li>
+                        <li><a href="#">📋 Liste Besoins</a></li>
+                        <li><a href="#">✅ Mes Besoins Affectés</a></li>
                     </ul>
                 </li>
 
-                <!-- Résultats & Évaluations -->
+                <!-- Paramétrage RH -->
                 <li class="submenu">
-                    <a href="#"><span>🎯 Résultats & Évaluations</span><span class="menu-arrow"></span></a>
+                    <a href="#"><span>⚙️ Paramétrage RH</span><span class="menu-arrow"></span></a>
                     <ul>
-                        <li><a href="#">📊 Statistiques des candidats</a></li>
-                        <li><a href="#">🏆 Classements & performances</a></li>
-                        <li><a href="#">📜 Rapports analytiques</a></li>
+                        <li><a href="{{ route('motifs.index') }}">📑 Affectation Motif</a></li>
+                        <li><a href="{{ route('competences.type') }}">🛠️ Type Compétences</a></li>
+                        <li><a href="{{ route('competence_types.index') }}">💡 Compétences</a></li>
+                        <li><a href="{{ route('entretiens.index') }}">✅ Avis Évaluation</a></li>
+                        <li><a href="{{ route('compagnes.index') }}">📢 Campagne recrutement</a></li>
+                        <li><a href="{{ route('source.index') }}">📂 Source CV</a></li>
+                        <li><a href="{{ route('categories.index') }}">🏢 Catégorie emploi</a></li>
+                        <li><a href="{{ route('decisions.index') }}">📋 Décision Clôture</a></li>
                     </ul>
                 </li>
 
-                <!-- Gestion des Offres d’Emploi -->
+                <!-- Gestion des Employés -->
                 <li class="submenu">
-                    <a href="#"><span>💼 Gestion des Offres</span><span class="menu-arrow"></span></a>
+                    <a href="#"><span>👨‍💼 Employés</span><span class="menu-arrow"></span></a>
                     <ul>
-                        <li><a href="#">➕ Ajouter une offre</a></li>
-                        <li><a href="#">📋 Liste des offres</a></li>
-                        <li><a href="#">📌 Suivi des candidatures</a></li>
+                        <li><a href="">👤 Liste des employés</a></li>
+                        <li><a href="">➕ Ajouter Employé</a></li>
+                        <li><a href="">💸 Gestion des salaires</a></li>
+                        <li><a href="">📊 Suivi des performances</a></li>
                     </ul>
                 </li>
 
-                <!-- Rapports & Exportation -->
+                <!-- IA Évaluation -->
                 <li class="submenu">
-                    <a href="#"><span>📂 Rapports & Exportation</span><span class="menu-arrow"></span></a>
+                    <a href="#"><span>🤖 IA Évaluation</span><span class="menu-arrow"></span></a>
                     <ul>
-                        <li><a href="#">📜 Générer un rapport</a></li>
-                        <li><a href="#">📥 Exporter les résultats</a></li>
+                        <li><a href="#">🎥 Analyser entretien vidéo</a></li>
+                        <li><a href="#">💡 Synthèse des compétences</a></li>
+                        <li><a href="#">🔍 Comparaison automatique</a></li>
                     </ul>
                 </li>
 
-                <!-- Configuration & Paramètres -->
+                <!-- IA Sélection -->
                 <li class="submenu">
-                    <a href="#"><span>⚙️ Configuration</span><span class="menu-arrow"></span></a>
+                    <a href="#"><span>🧠 IA Sélection</span><span class="menu-arrow"></span></a>
                     <ul>
-                        <li><a href="{{ route('motifs.index') }}">📑 Paramètres généraux</a></li>
-                        <li><a href="{{ route('competences.type') }}">🛠️ Gestion des compétences</a></li>
-                        <li><a href="{{ route('evaluations.index') }}">✅ Configuration des évaluations</a></li>
-                        <li><a href="#">🔔 Paramètres des notifications</a></li>
+                        <li><a href="#">🔮 Prédiction de la performance future</a></li>
+                        <li><a href="#">💼 Recommandation des candidats</a></li>
                     </ul>
                 </li>
 
-                <!-- Outils de Productivité -->
+                <!-- IA Administration -->
                 <li class="submenu">
-                    <a href="#"><span>📅 Outils de Productivité</span><span class="menu-arrow"></span></a>
+                    <a href="#"><span>⚙️ IA Administration</span><span class="menu-arrow"></span></a>
                     <ul>
-                        <li><a href="{{ route('calendar.index') }}">📅 Calendrier</a></li>
-                        <li><a href="#">📋 Dossiers en cours</a></li>
+                        <li><a href="#">📄 Tri automatique des CV</a></li>
+                        <li><a href="#">📅 Planification automatique</a></li>
                     </ul>
                 </li>
 
-                <!-- Analytiques -->
+                <!-- Rapports et Analyses -->
                 <li class="submenu">
-                    <a href="#"><span>📊 Analytiques</span><span class="menu-arrow"></span></a>
+                    <a href="#"><span>📊 Rapports</span><span class="menu-arrow"></span></a>
                     <ul>
-                        <li><a href="#">📈 Performances globales</a></li>
-                        <li><a href="#">📊 Statistiques détaillées</a></li>
+                        <li><a href="#">📈 Rapport Recrutement</a></li>
+                        <li><a href="#">📉 Rapport Performance</a></li>
                     </ul>
                 </li>
 
-                <!-- Support & Aide -->
-                <li class="submenu">
-                    <a href="#"><span>🛠️ Support & Aide</span><span class="menu-arrow"></span></a>
-                    <ul>
-                        <li><a href="#">📖 FAQ & Documentation</a></li>
-                        <li><a href="#">📞 Contacter le support</a></li>
-                        <li><a href="#">📋 Logs et erreurs</a></li>
-                    </ul>
-                </li>
-
+                <!-- Autres Sections -->
+                <li><a href="{{ route('calendar.index') }}"><span>📅 Calendrier</span></a></li>
+                <li><a href="#"><span>📂 Mes Dossiers En Cours</span></a></li>
+                <li><a href="#"><span>📦 Clôture</span></a></li>
             </ul>
         </div>
     </div>

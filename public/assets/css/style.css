@@ -2810,7 +2810,7 @@ td {
 }
 
 .sidebar-menu li a {
-    color: #000;
+    color: #f1f1f1;
     display: block;
     font-size: 14px;
     height: auto;
@@ -2819,7 +2819,7 @@ td {
 }
 
 .sidebar-menu li a:hover {
-    color: #000;
+    color: #f1f1f1;
     border-radius: 6px
 }
 

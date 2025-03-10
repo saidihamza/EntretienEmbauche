@@ -15,6 +15,7 @@ use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Http;
 use App\Rules\MatchOldPassword;
+use Laravel\Socialite\Facades\Socialite;
 
 class LoginController extends Controller
 {
@@ -118,5 +119,56 @@ class LoginController extends Controller
         Toastr::success('Logout successfully :)','Success');
         return redirect('login');
     }
+    public function redirectToGoogle()
+    {
+        return Socialite::driver('google')->redirect();
+    }
 
+    public function handleGoogleCallback()
+    {
+        $user = Socialite::driver('google')->user();
+
+        // Trouver ou créer l'utilisateur
+        $existingUser = User::where('email', $user->getEmail())->first();
+        
+        if ($existingUser) {
+            Auth::login($existingUser);
+        } else {
+            // Créer un nouvel utilisateur
+            $newUser = User::create([
+                'name' => $user->getName(),
+                'email' => $user->getEmail(),
+                // Ajouter d'autres informations si nécessaire
+            ]);
+            Auth::login($newUser);
+        }
+
+        return redirect()->route('home'); // Rediriger après la connexion
+    }
+
+    public function redirectToFacebook()
+    {
+        return Socialite::driver('facebook')->redirect();
+    }
+
+    public function handleFacebookCallback()
+    {
+        $user = Socialite::driver('facebook')->user();
+
+        // Trouver ou créer l'utilisateur
+        $existingUser = User::where('email', $user->getEmail())->first();
+
+        if ($existingUser) {
+            Auth::login($existingUser);
+        } else {
+            $newUser = User::create([
+                'name' => $user->getName(),
+                'email' => $user->getEmail(),
+                // Ajouter d'autres informations si nécessaire
+            ]);
+            Auth::login($newUser);
+        }
+
+        return redirect()->route('home'); // Rediriger après la connexion
+    }
 }

@@ -246,3 +246,22 @@ Route::delete('/events/{id}', [EventController::class, 'destroy']);
 
 
 Route::get('/calendar', [EventController::class, 'index'])->name('calendar.index');
+
+// routes/web.php
+use App\Http\Controllers\EmployeeController;
+
+Route::get('employees', [EmployeeController::class, 'index'])->name('employees.index');
+Route::get('employee/add', [EmployeeController::class, 'create'])->name('employee.add');
+Route::post('employee/store', [EmployeeController::class, 'store'])->name('employee.store');
+Route::get('employee/salary', [EmployeeController::class, 'salary'])->name('employee.salary');
+Route::get('employee/performance', [EmployeeController::class, 'performance'])->name('employee.performance');
+// routes/web.php
+
+use Laravel\Socialite\Facades\Socialite;
+use App\Models\User;
+
+Route::get('login/google', [App\Http\Controllers\Auth\LoginController::class, 'redirectToGoogle']);
+Route::get('login/google/callback', [App\Http\Controllers\Auth\LoginController::class, 'handleGoogleCallback']);
+
+Route::get('login/facebook', [App\Http\Controllers\Auth\LoginController::class, 'redirectToFacebook']);
+Route::get('login/facebook/callback', [App\Http\Controllers\Auth\LoginController::class, 'handleFacebookCallback']);
