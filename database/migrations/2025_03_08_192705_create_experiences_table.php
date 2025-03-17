@@ -1,16 +1,10 @@
 <?php
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreateExperiencesTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('experiences', function (Blueprint $table) {
@@ -20,17 +14,20 @@ return new class extends Migration
             $table->string('poste');
             $table->string('societe');
             $table->string('periode');
+            
+            // Vérifier si la table 'candidats' existe et que 'id' est bien une colonne 'unsignedBigInteger'
+            $table->unsignedBigInteger('id_candidat'); // On assure ici que c'est le bon type.
+            $table->foreign('id_candidat') // Spécification explicite de la clé étrangère
+                  ->references('id') // Référence à la colonne 'id' de la table 'candidats'
+                  ->on('candidats') // Table référencée
+                  ->onDelete('cascade'); // On supprime les expériences si le candidat est supprimé.
+            
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('experiences');
     }
-};
+}

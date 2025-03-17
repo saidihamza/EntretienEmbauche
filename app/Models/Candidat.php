@@ -42,5 +42,17 @@ class Candidat extends Model
         'cv_upload' => 'string', // Si vous souhaitez gérer le chemin du fichier téléchargé
     ];
 
-    // Validation personnalisée, méthodes supplémentaires ou relations peuvent être ajoutées ici
+    public function experiences()
+    {
+        return $this->hasMany(Experience::class, 'id_candidat');
+    }
+
+    public function formations()
+    {
+        return $this->hasMany(Formation::class, 'id_candidat');
+    }
+    public function competences()
+    {
+        return $this->hasMany(Competence::class, 'id_candidat');
+    }
 }

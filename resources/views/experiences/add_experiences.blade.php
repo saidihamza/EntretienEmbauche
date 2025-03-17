@@ -1,10 +1,6 @@
 <form action="{{ route('experiences.store') }}" method="POST" id="experienceForm">
     @csrf
     <div class="row">
-        <div class="col-12">
-            <h5 class="form-title text-xl font-semibold text-gray-700">Expériences Professionnelles</h5>
-        </div>
-
         <!-- Date Début -->
         <div class="col-12 col-sm-6">
             <div class="form-group local-forms">
@@ -70,8 +66,15 @@
             </div>
         </div>
 
+        <!-- Champ caché pour id_candidat -->
+        {{-- Champ caché pour l'ID Candidat --}}
+        <input type="hidden" id="id_candidat" name="id_candidat" value="{{ request()->input('id_candidat') }}">
+
+
+        {{-- Bouton de soumission --}}
         <div class="col-12">
             <button type="submit" class="btn btn-primary bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Ajouter</button>
         </div>
     </div>
 </form>
+

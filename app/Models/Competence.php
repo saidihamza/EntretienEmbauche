@@ -1,5 +1,6 @@
 <?php
 
+// app/Models/Competence.php
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,11 +10,10 @@ class Competence extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['competence']; // Add your fillable columns here
+    protected $fillable = ['id_candidat', 'nom'];
 
-    // Define the relationship with CompetenceType
-    public function competenceTypes()
+    public function candidat()
     {
-        return $this->hasMany(CompetenceType::class, 'competence', 'competence');
+        return $this->belongsTo(Candidat::class);
     }
 }

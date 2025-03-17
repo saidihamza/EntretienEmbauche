@@ -4,10 +4,26 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Formation;
+use App\Models\Candidat;
 use Brian2694\Toastr\Facades\Toastr;
 
 class FormationController extends Controller
 {
+    /** Afficher le formulaire d'ajout de formation */
+    public function showForm(Request $request)
+    {
+        // Récupérer l'ID du candidat depuis la requête
+        $idCandidat = $request->query('id_candidat');
+
+        // Vérifier si l'ID du candidat est valide
+        if (!$idCandidat || !Candidat::find($idCandidat)) {
+            Toastr::error('ID du candidat invalide ou manquant.', 'Erreur');
+            return redirect()->back();
+        }
+
+        return view('ton-formulaire', compact('idCandidat'));
+    }
+
     /** Liste des formations */
     public function index()
     {
@@ -26,26 +42,30 @@ class FormationController extends Controller
     public function store(Request $request)
     {
         // Validation des données
-        $request->validate([
+        $validated = $request->validate([
             'diplome' => 'required|string|max:255',
             'formation' => 'required|string|max:255',
             'universite' => 'required|string|max:255',
             'annee_obtention' => 'required|integer|digits:4',
+            'id_candidat' => 'required|exists:candidats,id', // Vérifie si l'id_candidat existe bien
         ]);
-
+    
         // Création de la formation
         Formation::create([
-            'diplome' => $request->diplome,
-            'formation' => $request->formation,
-            'universite' => $request->universite,
-            'annee_obtention' => $request->annee_obtention,
+            'diplome' => $validated['diplome'],
+            'formation' => $validated['formation'],
+            'universite' => $validated['universite'],
+            'annee_obtention' => $validated['annee_obtention'],
+            'id_candidat' => $validated['id_candidat'],
         ]);
-
+    
         // Message de succès avec Toastr
         Toastr::success('Formation ajoutée avec succès!', 'Succès');
-        
-        return redirect()->route('formation.index');
+    
+        return redirect()->to(route('candidat/add/page') . '?id_candidat=' . $validated['id_candidat']  . '#experiences');
+
     }
+    
 
     /** Afficher une formation */
     public function show($id)
@@ -87,7 +107,7 @@ class FormationController extends Controller
 
         // Message de succès avec Toastr
         Toastr::success('Formation mise à jour avec succès!', 'Succès');
-        
+
         return redirect()->route('formation.index');
     }
 
@@ -102,7 +122,7 @@ class FormationController extends Controller
 
         // Message de succès avec Toastr
         Toastr::success('Formation supprimée avec succès!', 'Succès');
-        
+
         return redirect()->route('formation.index');
     }
 }

@@ -1,13 +1,6 @@
 <form action="{{ route('candidat/add/save') }}" method="POST" enctype="multipart/form-data" id="informationsForm">
     @csrf
     <div class="row">
-        <div class="col-12">
-            <h5 class="form-title candidat-info text-xl font-semibold text-gray-700">Informations sur le Candidat
-                <span>
-                    <a href="javascript:;"><i class="feather-more-vertical"></i></a>
-                </span>
-            </h5>
-        </div>
         {{-- catégorie --}}
         <div class="col-12 col-sm-4">
             <div class="form-group local-forms">
@@ -211,7 +204,7 @@
         {{-- Soumettre --}}
         <div class="col-12">
             <div class="candidat-submit">
-                <button type="submit" class="btn btn-primary bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Ajouter</button>
+                <button type="submit" class="btn btn-primary bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Suivant</button>
             </div>
         </div>
 

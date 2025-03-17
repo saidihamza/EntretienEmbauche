@@ -25,8 +25,11 @@ use App\Http\Controllers\CompagneController;
 use App\Http\Controllers\EntretienController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\CalendarController;
-
-
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\EmployeeController;
+use Laravel\Socialite\Facades\Socialite;
+use App\Http\Controllers\PerformanceController;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -112,6 +115,7 @@ Route::controller(CandidatController::class)->group(function () {
     Route::post('candidat/delete', 'candidatDelete')->name('candidat/delete'); // delete record candidat
     Route::get('candidat/profile/{id}', 'candidatProfile')->middleware('auth'); // profile candidat
     Route::get('candidat/suivie', 'candidatSuivie')->middleware('auth')->name('candidat/suivie');
+    Route::get('candidat/details/{id}', [CandidatController::class, 'show']);
 
 });
 
@@ -144,17 +148,16 @@ Route::delete('/categories/{id}', [CategorieController::class, 'destroy'])->name
 Route::post('/formation', [FormationController::class, 'store'])->name('formation.store');
 Route::get('/formation/{id}/edit', [FormationController::class, 'edit'])->name('formation.edit');
 Route::put('/formation/{id}', [FormationController::class, 'update'])->name('formation.update');
-
+Route::get('/formations/create/{id_candidat}', [FormationController::class, 'create'])->name('formation.create');
+Route::post('/formation/store', [FormationController::class, 'store'])->name('formation.store');
 
 // ----------------------------experiences ------------------------------//
-Route::post('/experiences', [ExperienceController::class, 'store'])->name('experiences.store');
+
+Route::resource('experiences', ExperienceController::class);
 
 // ----------------------------competences ------------------------------//
 Route::post('/competences', [CompetenceController::class, 'store'])->name('competences.store');
-Route::put('/competences/{id}', [CompetenceController::class, 'update'])->name('competences.update');
-Route::get('/competences/type', [CompetenceController::class, 'type'])->name('competences.type');
-Route::delete('/competences/{id}', [CompetenceController::class, 'destroy'])->name('competences.destroy');
-
+Route::get('/competences/type/', [CompetenceController::class, 'showByType'])->name('competences.type');
 // ----------------------------type de competences ------------------------------//
 
 Route::get('/competence-types', [CompetenceTypeController::class, 'index'])->name('competence_types.index');
@@ -223,45 +226,32 @@ Route::delete('feedbacks/{feedback}', [FeedbackController::class, 'destroy'])->n
 
 // ----------------------------calendar ------------------------------//
 
-
 Route::get('/calendar', [CalendarController::class, 'index']);
-use App\Http\Controllers\EventController;
 
-// Afficher le calendrier
+// ----------------------------- calendrier -------------------------//
+
 Route::get('/calendar', [EventController::class, 'index']);
-
-// Récupérer les événements pour FullCalendar
 Route::get('/events', [EventController::class, 'getEvents']);
-
-// Enregistrer un nouvel événement
-
 Route::post('/events', [EventController::class, 'store']);
-
-
-// Mettre à jour un événement existant
 Route::put('/events/{id}', [EventController::class, 'update']);
-
-// Supprimer un événement
 Route::delete('/events/{id}', [EventController::class, 'destroy']);
-
-
 Route::get('/calendar', [EventController::class, 'index'])->name('calendar.index');
 
-// routes/web.php
-use App\Http\Controllers\EmployeeController;
+// ----------------------------- employees controller -------------------------//
 
 Route::get('employees', [EmployeeController::class, 'index'])->name('employees.index');
-Route::get('employee/add', [EmployeeController::class, 'create'])->name('employee.add');
-Route::post('employee/store', [EmployeeController::class, 'store'])->name('employee.store');
-Route::get('employee/salary', [EmployeeController::class, 'salary'])->name('employee.salary');
-Route::get('employee/performance', [EmployeeController::class, 'performance'])->name('employee.performance');
-// routes/web.php
+Route::post('employee/store', [EmployeeController::class, 'store'])->name('employees.store');
+Route::delete('employee/{employee}', [EmployeeController::class, 'destroy'])->name('employees.destroy');
+Route::put('employee/{employee}', [EmployeeController::class, 'update'])->name('employees.update');
+Route::get('salaries', [EmployeeController::class, 'getAllSalaries'])->name('employees.salaries');
 
-use Laravel\Socialite\Facades\Socialite;
-use App\Models\User;
+// ----------------------------- performances controller -------------------------//
+
+Route::get('performances', [PerformanceController::class, 'index'])->name('performances.index');
+
+// ----------------------------- Social controller -------------------------//
 
 Route::get('login/google', [App\Http\Controllers\Auth\LoginController::class, 'redirectToGoogle']);
 Route::get('login/google/callback', [App\Http\Controllers\Auth\LoginController::class, 'handleGoogleCallback']);
-
 Route::get('login/facebook', [App\Http\Controllers\Auth\LoginController::class, 'redirectToFacebook']);
 Route::get('login/facebook/callback', [App\Http\Controllers\Auth\LoginController::class, 'handleFacebookCallback']);

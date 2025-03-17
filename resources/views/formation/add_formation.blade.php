@@ -63,6 +63,10 @@
             </div>
         </div>
 
+        {{-- Champ caché pour l'ID Candidat --}}
+        <input type="hidden" id="id_candidat" name="id_candidat" value="{{ request()->input('id_candidat') }}">
+
+
         {{-- Bouton de soumission --}}
         <div class="col-12">
             <button type="submit" class="btn btn-primary bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Ajouter</button>
@@ -70,14 +74,4 @@
     </div>
 </form>
 
-@if(session('success'))
-    <script>
-        toastr.success("{{ session('success') }}", "Succès", {timeOut: 5000});
-    </script>
-@endif
 
-@if(session('error'))
-    <script>
-        toastr.error("{{ session('error') }}", "Erreur", {timeOut: 5000});
-    </script>
-@endif

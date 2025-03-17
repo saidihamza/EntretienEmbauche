@@ -1,5 +1,7 @@
 <?php
 
+// app/Models/Experience.php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,5 +17,10 @@ class Experience extends Model
         'poste',
         'societe',
         'periode',
+        'id_candidat',
     ];
+    public function candidat()
+    {
+        return $this->belongsTo(Candidat::class, 'id_candidat');
+    }
 }

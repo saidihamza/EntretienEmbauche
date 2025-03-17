@@ -1,5 +1,7 @@
 <?php
 
+// app/Http/Controllers/ExperienceController.php
+
 namespace App\Http\Controllers;
 
 use App\Models\Experience;
@@ -7,33 +9,23 @@ use Illuminate\Http\Request;
 
 class ExperienceController extends Controller
 {
-    // Affichage du formulaire
-    public function create()
-    {
-        return view('experiences.create');
-    }
-
-    // Traitement de la soumission du formulaire
     public function store(Request $request)
     {
-        // Validation des données
+        // Validate the input data
         $validated = $request->validate([
             'date_debut' => 'required|date',
             'date_fin' => 'required|date',
             'poste' => 'required|string|max:255',
             'societe' => 'required|string|max:255',
             'periode' => 'required|string|max:255',
+            'id_candidat' => 'required|exists:candidats,id',
         ]);
 
-        try {
-            // Création d'une nouvelle expérience
-            Experience::create($validated);
+        // Create the experience
+        Experience::create($validated);
 
-            // Redirection avec un message de succès
-            return redirect()->back()->with('success', 'Expérience ajoutée avec succès');
-        } catch (\Exception $e) {
-            // Gestion des erreurs
-            return redirect()->back()->with('error', 'Une erreur est survenue');
-        }
+        // Redirect with the validated id_candidat
+        return redirect()->to(route('candidat/add/page') . '?id_candidat=' . $validated['id_candidat'] . '#competences');
     }
 }
+

@@ -51,38 +51,21 @@
                 <li class="submenu">
                     <a href="#"><span>👨‍💼 Employés</span><span class="menu-arrow"></span></a>
                     <ul>
-                        <li><a href="">👤 Liste des employés</a></li>
-                        <li><a href="">➕ Ajouter Employé</a></li>
-                        <li><a href="">💸 Gestion des salaires</a></li>
-                        <li><a href="">📊 Suivi des performances</a></li>
+                        <li><a href="{{ route('employees.index') }}">➕ Ajouter Employé</a></li>  
+                        <li><a href="{{ route('employees.salaries') }}">💸 Gestion des salaires</a></li>
+                        <li><a href="{{ route('performances.index') }}">📊 Suivi des performances</a></li>
                     </ul>
                 </li>
-
-                <!-- IA Évaluation -->
-                <li class="submenu">
-                    <a href="#"><span>🤖 IA Évaluation</span><span class="menu-arrow"></span></a>
-                    <ul>
-                        <li><a href="#">🎥 Analyser entretien vidéo</a></li>
-                        <li><a href="#">💡 Synthèse des compétences</a></li>
-                        <li><a href="#">🔍 Comparaison automatique</a></li>
-                    </ul>
-                </li>
-
-                <!-- IA Sélection -->
-                <li class="submenu">
-                    <a href="#"><span>🧠 IA Sélection</span><span class="menu-arrow"></span></a>
-                    <ul>
-                        <li><a href="#">🔮 Prédiction de la performance future</a></li>
-                        <li><a href="#">💼 Recommandation des candidats</a></li>
-                    </ul>
-                </li>
-
                 <!-- IA Administration -->
                 <li class="submenu">
-                    <a href="#"><span>⚙️ IA Administration</span><span class="menu-arrow"></span></a>
+                    <a href="#"><span>🧠  IA Sélection</span><span class="menu-arrow"></span></a>
                     <ul>
                         <li><a href="#">📄 Tri automatique des CV</a></li>
                         <li><a href="#">📅 Planification automatique</a></li>
+                        <li><a href="#">🔮 Prédiction de la performance future</a></li>
+                        <li><a href="#">💼 Recommandation des candidats</a></li>
+                        <li><a href="#">💡 Synthèse des compétences</a></li>
+                        <li><a href="#">🔍 Comparaison automatique</a></li>
                     </ul>
                 </li>
 

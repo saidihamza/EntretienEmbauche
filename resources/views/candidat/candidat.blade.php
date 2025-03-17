@@ -1,178 +1,187 @@
 @extends('layouts.master')
+
 @section('content')
     <div class="page-wrapper">
         <div class="content container-fluid">
             <div class="page-header">
                 <div class="row">
-                    <div class="col-sm-12">
-                        <div class="page-sub-header">
-                            <h3 class="page-title">Candidats</h3>
-                            <ul class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{ route('candidat/list') }}">Candidats</a></li>
-                                <li class="breadcrumb-item active">Tous les Candidats</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                    <div class="col-md-12">
 
-            {{-- Message --}}
-            {!! Toastr::message() !!}
+                        <!-- Zone de recherche -->
+                        <div class="mb-4">
+                            <input type="text" id="searchInput" class="form-control" placeholder="Rechercher...">
+                        </div>
 
-            <div class="candidat-group-form">
-                <div class="row">
-                    <div class="col-lg-3 col-md-6">
-                        <div class="form-group">
-                            <input type="text" id="searchById" class="form-control" placeholder="Search by ID ...">
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="form-group">
-                            <input type="text" id="searchByName" class="form-control" placeholder="Search by Name ...">
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="form-group">
-                            <input type="text" id="searchByPhone" class="form-control" placeholder="Search by Phone ...">
-                        </div>
-                    </div>
-                    <div class="col-lg-2">
-                        <div class="search-candidat-btn">
-                            <button type="button" class="btn btn-primary" id="searchButton">Search</button>
-                            <button type="button" class="btn btn-secondary" id="resetButton">Reset</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                        <!-- Table -->
+                        <table class="table table-striped">
+                            <thead class="candidat-thread">
+                                <tr>
+                                    <th>
+                                        <div class="form-check check-tables">
+                                            <input class="form-check-input" type="checkbox">
+                                        </div>
+                                    </th>
+                                    <th>ID</th>
+                                    <th>Date de Naissance</th>
+                                    <th>Catégorie</th>
+                                    <th>Candidat</th>
+                                    <th>Téléphone</th>
+                                    <th>Email</th>
+                                    <th class="text-end">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="candidatTable">
+                                @foreach ($candidatList as $list)
+                                    <tr>
+                                        <td>
+                                            <div class="form-check check-tables">
+                                                <input class="form-check-input" type="checkbox">
+                                            </div>
+                                        </td>
+                                        <td>{{ $list->id }}</td>
+                                        <td>{{ $list->date_of_birth }}</td>
+                                        <td>{{ $list->categorie }}</td>
+                                        <td>{{ $list->nom_complet ?? 'N/A' }}</td>
+                                        <td>{{ $list->phone_number }}</td>
+                                        <td>{{ $list->email }}</td>
+                                        <td class="text-end">
+                                            <div class="actions d-flex gap-2 justify-content-end">
+                                                <a href="{{ url('candidat/edit/'.$list->id) }}" class="btn btn-sm bg-warning-light" title="Modifier">
+                                                    <i class="feather-edit"></i>
+                                                </a>
+                                                <a href="#" 
+                                                    class="btn btn-sm bg-danger-light candidat_delete" 
+                                                    data-id="{{ $list->id }}" 
+                                                    data-avatar="{{ $list->cv_upload }}" 
+                                                    data-bs-toggle="modal" 
+                                                    data-bs-target="#candidatUser" 
+                                                    title="Supprimer">
+                                                    <i class="feather-trash-2"></i>
+                                                </a>
+                                                <button type="button"
+                                                    class="btn btn-sm bg-info-light btn-detail"
+                                                    data-id="{{ $list->id }}">
+                                                    <i class="feather-eye"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
 
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="card card-table comman-shadow">
-                        <div class="card-body">
-                            <div class="page-header">
-                                <div class="row align-items-center">
-                                    <div class="col">
-                                        <h3 class="page-title">Candidats</h3>
-                                    </div>
-                                    <div class="col-auto text-end float-end ms-auto download-grp">
-                                        <a href="{{ route('candidat/list') }}" class="btn btn-outline-gray me-2 active"><i class="feather-list"></i></a>
-                                        <a href="{{ route('candidat/grid') }}" class="btn btn-outline-gray me-2"><i class="feather-grid"></i></a>
-                                        <a href="#" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i> Download</a>
-                                        <a href="{{ route('candidat/add/page') }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
-                                    </div>
-                                </div>
+                        <!-- Modal enrichi -->
+                        <div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true">
+                          <div class="modal-dialog modal-lg modal-dialog-centered">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="detailsModalLabel">Détails du Candidat</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                              </div>
+                              <div class="modal-body">
+                                <p><strong>ID:</strong> <span id="detailId"></span></p>
+                                <p><strong>Nom complet:</strong> <span id="detailNom"></span></p>
+                                <p><strong>Date de Naissance:</strong> <span id="detailDob"></span></p>
+                                <p><strong>Catégorie:</strong> <span id="detailCategorie"></span></p>
+                                <p><strong>Téléphone:</strong> <span id="detailPhone"></span></p>
+                                <p><strong>Email:</strong> <span id="detailEmail"></span></p>
+
+                                <h6>Expériences</h6>
+                                <ul id="detailExperiences"></ul>
+
+                                <h6>Formations</h6>
+                                <ul id="detailFormations"></ul>
+
+                                <h6>Compétences</h6>
+                                <ul id="detailCompetences"></ul>
+
+                                <h6>CV</h6>
+                                <div id="detailCvUpload"></div>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                              </div>
                             </div>
-
-                            <div class="table-responsive">
-                                <table class="table border-0 star-candidat table-hover table-center mb-0 datatable table-striped">
-                                    <thead class="candidat-thread">
-                                        <tr>
-                                            <th>
-                                                <div class="form-check check-tables">
-                                                    <input class="form-check-input" type="checkbox" value="something">
-                                                </div>
-                                            </th>
-                                            <th>Date <i class="feather-chevron-up"></i></th> {{-- Example of sortable column --}}
-                                            <th>Categorie</th>
-                                            <th>Candidat</th>
-                                            <th>Tel</th>
-                                            <th>Email</th>
-                                            <th class="text-end">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($candidatList as $key => $list)
-                                            <tr>
-                                                <td>
-                                                    <div class="form-check check-tables">
-                                                        <input class="form-check-input" type="checkbox" value="something">
-                                                    </div>
-                                                </td>
-                                                <td>{{ $list->date_of_birth }}</td>
-                                                <td>{{ $list->class }} {{ $list->section }}</td>
-                                                <td>
-                                                    <h2 class="table-avatar">
-                                                        <a href="candidat-details.html" class="avatar avatar-sm me-2">
-                                                            <img class="avatar-img rounded-circle" src="{{ Storage::url('candidat-photos/'.$list->upload) }}" alt="User Image">
-                                                        </a>
-                                                        <a href="candidat-details.html">{{ $list->first_name }} {{ $list->last_name }}</a>
-                                                    </h2>
-                                                </td>
-                                                <td>{{ $list->phone_number }}</td>
-                                                <td>{{ $list->email }}</td>
-                                                <td class="text-end">
-                                                    <div class="actions">
-                                                        <a href="{{ url('candidat/edit/'.$list->id) }}" class="btn btn-sm bg-danger-light">
-                                                            <i class="feather-edit"></i>
-                                                        </a>
-                                                        <a class="btn btn-sm bg-danger-light candidat_delete" data-bs-toggle="modal" data-bs-target="#candidatUser">
-                                                            <i class="feather-trash-2 me-1"></i>
-                                                        </a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                            
-
+                          </div>
                         </div>
+
+                        <!-- Scripts -->
+                        <script>
+                            // Recherche simple
+                            document.getElementById("searchInput").addEventListener("keyup", function() {
+                                const value = this.value.toLowerCase();
+                                const rows = document.querySelectorAll("#candidatTable tr");
+                                rows.forEach(row => {
+                                    row.style.display = row.innerText.toLowerCase().includes(value) ? "" : "none";
+                                });
+                            });
+
+                            // Remplir le modal avec AJAX
+                            document.querySelectorAll('.btn-detail').forEach(button => {
+                                button.addEventListener('click', function() {
+                                    const id = this.getAttribute('data-id');
+
+                                    fetch(`/candidat/details/${id}`)
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            // Infos basiques
+                                            document.getElementById('detailId').innerText = data.id;
+                                            document.getElementById('detailNom').innerText = data.nom_complet ?? 'N/A';
+                                            document.getElementById('detailDob').innerText = data.date_of_birth;
+                                            document.getElementById('detailCategorie').innerText = data.categorie;
+                                            document.getElementById('detailPhone').innerText = data.phone_number;
+                                            document.getElementById('detailEmail').innerText = data.email;
+
+                                            // Expériences
+                                            let expHtml = '';
+                                            if(data.experiences.length){
+                                                data.experiences.forEach(exp => {
+                                                    expHtml += `<li><strong>${exp.poste}</strong> chez ${exp.societe} (${exp.date_debut} - ${exp.date_fin})</li>`;
+                                                });
+                                            } else {
+                                                expHtml = '<li>Aucune expérience</li>';
+                                            }
+                                            document.getElementById('detailExperiences').innerHTML = expHtml;
+
+                                            // Formations
+                                            let formHtml = '';
+                                            if(data.formations.length){
+                                                data.formations.forEach(form => {
+                                                    formHtml += `<li>${form.diplome} - ${form.ecole} (${form.date_debut} - ${form.date_fin})</li>`;
+                                                });
+                                            } else {
+                                                formHtml = '<li>Aucune formation</li>';
+                                            }
+                                            document.getElementById('detailFormations').innerHTML = formHtml;
+
+                                            // Compétences
+                                            let compHtml = '';
+                                            if(data.competences.length){
+                                                data.competences.forEach(comp => {
+                                                    compHtml += `<li>${comp.nom}</li>`;
+                                                });
+                                            } else {
+                                                compHtml = '<li>Aucune compétence</li>';
+                                            }
+                                            document.getElementById('detailCompetences').innerHTML = compHtml;
+
+                                            // CV Upload
+                                            if(data.cv_upload){
+                                                document.getElementById('detailCvUpload').innerHTML = `<a href="/storage/${data.cv_upload}" target="_blank" class="btn btn-primary btn-sm">Voir le CV</a>`;
+                                            } else {
+                                                document.getElementById('detailCvUpload').innerHTML = '<span>Aucun CV disponible</span>';
+                                            }
+
+                                            // Afficher le modal
+                                            new bootstrap.Modal(document.getElementById('detailsModal')).show();
+                                        });
+                                });
+                            });
+                        </script>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    {{-- Modal for Deleting Candidat --}}
-    <div class="modal fade contentmodal" id="candidatUser" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content doctor-profile">
-                <div class="modal-header pb-0 border-bottom-0 justify-content-end">
-                    <button type="button" class="close-btn" data-bs-dismiss="modal" aria-label="Close"><i class="feather-x-circle"></i></button>
-                </div>
-                <div class="modal-body">
-                    <form action="{{ route('candidat/delete') }}" method="POST">
-                        @csrf
-                        <div class="delete-wrap text-center">
-                            <div class="del-icon">
-                                <i class="feather-x-circle"></i>
-                            </div>
-                            <input type="hidden" name="id" class="e_id" value="">
-                            <input type="hidden" name="avatar" class="e_avatar" value="">
-                            <h2>Are you sure you want to delete this candidat?</h2>
-                            <div class="submit-section">
-                                <button type="submit" class="btn btn-success me-2">Yes</button>
-                                <a class="btn btn-danger" data-bs-dismiss="modal">No</a>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    @section('script')
-        {{-- Delete JS --}}
-        <script>
-            $(document).on('click', '.candidat_delete', function () {
-                var _this = $(this).closest('tr');
-                $('.e_id').val(_this.find('.id').text());
-                $('.e_avatar').val(_this.find('.avatar').text());
-            });
-
-            // Add functionality for the search
-            document.getElementById('searchButton').addEventListener('click', function () {
-                // Filter functionality
-            });
-
-            // Reset button functionality
-            document.getElementById('resetButton').addEventListener('click', function () {
-                document.getElementById('searchById').value = '';
-                document.getElementById('searchByName').value = '';
-                document.getElementById('searchByPhone').value = '';
-            });
-        </script>
-    @endsection
-
 @endsection

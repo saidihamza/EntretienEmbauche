@@ -13,16 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        if (!Schema::hasTable('competences')) {
-            Schema::create('competences', function (Blueprint $table) {
-                $table->id();
-                $table->string('competence');
-                $table->timestamps();
-            });
-        }
+        Schema::create('performances', function (Blueprint $table) {
+            $table->id();
+            $table->string('employee_name');
+            $table->integer('score');
+            $table->text('comments')->nullable();
+            $table->timestamps();
+        });
     }
     
-
     /**
      * Reverse the migrations.
      *
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('competences');
+        Schema::dropIfExists('performances');
     }
 };

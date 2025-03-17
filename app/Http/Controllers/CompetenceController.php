@@ -1,53 +1,29 @@
 <?php
 
+// app/Http/Controllers/CompetenceController.php
 namespace App\Http\Controllers;
 
-use App\Models\Competence; // Ajout du modèle Competence
 use Illuminate\Http\Request;
+use App\Models\Competence;
 
 class CompetenceController extends Controller
 {
-    
-    
-    public function type()
-    {
-        $competences = Competence::all(); // Utilisation correcte du modèle
-        return view('competences.type', compact('competences'));
-        
-    }
-
     public function store(Request $request)
     {
-        // Validation des données d'entrée
         $request->validate([
-            'competence' => 'required|string|max:255',
+            'competences' => 'required|array',
+            'id_candidat' => 'required|exists:candidats,id'
         ]);
 
-        // Création de la compétence
-        Competence::create([
-            'competence' => $request->competence,
-        ]);
+        foreach ($request->competences as $competence) {
+            Competence::create([
+                'id_candidat' => $request->id_candidat,
+                'nom' => $competence
+            ]);
+        }
 
-        // Retour avec message de succès
-        return redirect()->back()->with('success', 'Compétence ajoutée avec succès.');
-    }
 
-    public function update(Request $request, $id)
-    {
-        $competence = Competence::findOrFail($id);
-        $competence->competence = $request->competence;
-        $competence->save();
-    
-        return redirect()->route('competences.type')->with('success', 'Compétence modifiée avec succès');
-    }
-    
+        return redirect()->to(route('candidat/add/page'));
 
-    public function destroy($id)
-    {
-        // Suppression de la compétence par ID
-        Competence::findOrFail($id)->delete();
-
-        // Retour avec message de succès
-        return redirect()->back()->with('success', 'Compétence supprimée avec succès.');
     }
 }

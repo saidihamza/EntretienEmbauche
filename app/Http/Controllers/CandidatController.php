@@ -34,60 +34,74 @@ class CandidatController extends Controller
 
         return view('candidat.add-candidat', compact('categories', 'sources'));
     }
+     /** show candidat */
+     public function show($id)
+    {
+        $candidat = Candidat::with(['experiences', 'formations', 'competences'])->findOrFail($id);
+
+        return response()->json($candidat);
+    }
 
     /** Enregistrer un candidat */
-    public function candidatSave(Request $request)
-    {
-        $request->validate([
-            'first_name' => 'required|string|max:255',
-            'date_of_birth' => 'required|date',
-            'gender' => 'required|string|in:Female,Male,Others',
-            'email' => 'required|email|max:255|unique:candidats,email',
-            'phone_number' => 'nullable|string|max:20',
-            'marital_status' => 'required|string|in:Single,Married,Divorced',
-            'motorized' => 'required|string|in:Yes,No',
-            'has_driving_license' => 'required|string|in:Yes,No',
-            'has_visa' => 'required|string|in:Yes,No',
-            'categorie' => 'required|string|max:255',
-            'cv_source' => 'nullable|string|max:255',
-            'cv_upload' => 'required|file|mimes:pdf,doc,docx|max:2048',
-            'comment' => 'nullable|string',
-        ]);
 
-        DB::beginTransaction();
-        try {
-            $cvFileName = null;
-            if ($request->hasFile('cv_upload')) {
-                $cvFileName = time() . '.' . $request->cv_upload->extension();
-                $request->cv_upload->storeAs('public/candidats-cv', $cvFileName);
-            }
-
-            Candidat::create([
-                'first_name' => $request->input('first_name'),
-                'date_of_birth' => $request->input('date_of_birth'),
-                'gender' => $request->input('gender'),
-                'email' => $request->input('email'),
-                'phone_number' => $request->input('phone_number'),
-                'marital_status' => $request->input('marital_status'),
-                'motorized' => $request->input('motorized'),
-                'has_driving_license' => $request->input('has_driving_license'),
-                'has_visa' => $request->input('has_visa'),
-                'categorie' => $request->input('categorie'),
-                'cv_source' => $request->input('cv_source'),
-                'cv_upload' => $cvFileName,
-                'comment' => $request->input('comment'),
+        public function candidatSave(Request $request)
+        {
+            $request->validate([
+                'first_name' => 'required|string|max:255',
+                'date_of_birth' => 'required|date',
+                'gender' => 'required|string|in:Female,Male,Others',
+                'email' => 'required|email|max:255|unique:candidats,email',
+                'phone_number' => 'nullable|string|max:20',
+                'marital_status' => 'required|string|in:Single,Married,Divorced',
+                'motorized' => 'required|string|in:Yes,No',
+                'has_driving_license' => 'required|string|in:Yes,No',
+                'has_visa' => 'required|string|in:Yes,No',
+                'categorie' => 'required|string|max:255',
+                'cv_source' => 'nullable|string|max:255',
+                'cv_upload' => 'required|file|mimes:pdf,doc,docx|max:2048',
+                'comment' => 'nullable|string',
             ]);
 
-            Toastr::success('Ajout réussi :)', 'Succès');
-            DB::commit();
+            DB::beginTransaction();
+            try {
+                $cvFileName = null;
+                if ($request->hasFile('cv_upload')) {
+                    $cvFileName = time() . '.' . $request->cv_upload->extension();
+                    $request->cv_upload->storeAs('public/candidats-cv', $cvFileName);
+                }
 
-            return redirect()->route('candidat.list');
-        } catch (\Exception $e) {
-            DB::rollback();
-            Toastr::error('Échec de l\'ajout :) ' . $e->getMessage(), 'Erreur');
-            return redirect()->back()->withInput();
+                // Créer un nouveau candidat
+                $candidat = Candidat::create([
+                    'first_name' => $request->input('first_name'),
+                    'date_of_birth' => $request->input('date_of_birth'),
+                    'gender' => $request->input('gender'),
+                    'email' => $request->input('email'),
+                    'phone_number' => $request->input('phone_number'),
+                    'marital_status' => $request->input('marital_status'),
+                    'motorized' => $request->input('motorized'),
+                    'has_driving_license' => $request->input('has_driving_license'),
+                    'has_visa' => $request->input('has_visa'),
+                    'categorie' => $request->input('categorie'),
+                    'cv_source' => $request->input('cv_source'),
+                    'cv_upload' => $cvFileName,
+                    'comment' => $request->input('comment'),
+                ]);
+
+                // Commencer la transaction
+                DB::commit();
+
+                // Rediriger vers l'URL avec l'ID du candidat
+                Toastr::success('Ajout réussi :)', 'Succès');
+
+                return redirect()->to(route('candidat/add/page') . '?id_candidat=' . $candidat->id . '#formation');
+
+            } catch (\Exception $e) {
+                DB::rollback();
+                Toastr::error('Échec de l\'ajout :) ' . $e->getMessage(), 'Erreur');
+                return redirect()->back()->withInput();
+            }
         }
-    }
+
 
     /** Modifier un candidat */
     public function candidatEdit($id)

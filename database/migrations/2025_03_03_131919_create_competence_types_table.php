@@ -10,14 +10,28 @@ class CreateCompetenceTypesTable extends Migration
     {
         Schema::create('competence_types', function (Blueprint $table) {
             $table->id();
-            $table->string('competence'); // Nom de la compétence
-            $table->foreignId('type_competence')->constrained('competences')->onDelete('cascade'); // Référence à la table competences (ID de la compétence)
+            
+            // Clef étrangère vers la table 'competences'
+            $table->unsignedBigInteger('competence_id');
+            $table->string('type_competence'); // Par exemple: "Technique", "Comportementale", etc.
+
+            // Déclaration de la foreign key correctement formée
+            $table->foreign('competence_id')
+                  ->references('id')
+                  ->on('competences')
+                  ->onDelete('cascade');
+            
             $table->timestamps();
         });
     }
-    
+
     public function down()
     {
+        // Toujours supprimer la foreign key avant de drop la table pour éviter des erreurs
+        Schema::table('competence_types', function (Blueprint $table) {
+            $table->dropForeign(['competence_id']);
+        });
+
         Schema::dropIfExists('competence_types');
     }
 }

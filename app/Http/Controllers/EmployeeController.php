@@ -1,6 +1,5 @@
 <?php
 
-// app/Http/Controllers/EmployeeController.php
 namespace App\Http\Controllers;
 
 use App\Models\Employee;
@@ -8,43 +7,55 @@ use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
 {
-    // Liste des employés
     public function index()
     {
         $employees = Employee::all();
         return view('employees.index', compact('employees'));
     }
 
-    // Ajouter un employé
-    public function create()
-    {
-        return view('employees.create');
-    }
-
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:employees,email',
-            'salary' => 'nullable|numeric',
-            'performance_score' => 'nullable|numeric',
+        $request->validate([
+            'nom' => 'required|string',
+            'prenom' => 'required|string',
+            'email' => 'required|email|unique:employees',
+            'telephone' => 'required|string',
+            'poste' => 'required|string',
+            'salaire' => 'required|numeric',
+            'date_embauche' => 'required|date',
         ]);
 
-        Employee::create($validated);
-        return redirect()->route('employees.index');
+        Employee::create($request->all());
+
+        return redirect()->route('employees.index')->with('success', 'Employé ajouté avec succès.');
     }
 
-    // Gérer les salaires
-    public function salary()
+    public function update(Request $request, Employee $employee)
     {
-        $employees = Employee::all();
-        return view('employees.salary', compact('employees'));
+        $request->validate([
+            'nom' => 'required|string',
+            'prenom' => 'required|string',
+            'email' => 'required|email|unique:employees,email,' . $employee->id,
+            'telephone' => 'required|string',
+            'poste' => 'required|string',
+            'salaire' => 'required|numeric',
+            'date_embauche' => 'required|date',
+        ]);
+
+        $employee->update($request->all());
+
+        return redirect()->route('employees.index')->with('success', 'Employé mis à jour avec succès.');
     }
 
-    // Suivi des performances
-    public function performance()
+    public function destroy(Employee $employee)
     {
-        $employees = Employee::all();
-        return view('employees.performance', compact('employees'));
+        $employee->delete();
+
+        return redirect()->route('employees.index')->with('success', 'Employé supprimé avec succès.');
+    }
+    public function getAllSalaries()
+    {
+        $salaries = Employee::pluck('salaire');
+        return view('employees.salaries', compact('salaries'));
     }
 }
